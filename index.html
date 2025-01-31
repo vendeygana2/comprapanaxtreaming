@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario y Video</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            position: relative;
+            width: 90%; /* Ancho reducido para dejar espacio al marco */
+            height: 90vh; /* Altura reducida para dejar espacio al marco */
+            margin: 5% auto; /* Centrar el contenedor */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: black; /* Fondo negro */
+            border: 5px solid #a8ff00; /* Marco verde */
+            border-radius: 15px; /* Bordes redondeados */
+            padding: 20px; /* Espacio interno */
+            box-shadow: 0 0 20px rgba(168, 255, 0, 0.5); /* Sombra verde */
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .form-iframe {
+            width: 100%;
+            height: 50%;
+            border: none;
+        }
+
+        .video-frame {
+            margin-top: 20px;
+            width: 100%;
+            height: 30%;
+        }
+
+        .video-frame iframe {
+            width: 100%;
+            height: 100%;
+        }
+
+        .download-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: black;
+            color: white;
+            border: 2px solid #a8ff00; /* Borde verde */
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            animation: pulse 1.5s infinite; /* Efecto de titilación */
+        }
+
+        .download-btn img {
+            width: 30px;
+            height: 30px;
+            margin-right: 10px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: black;
+            margin: 15% auto;
+            padding: 20px;
+            border: 5px solid #a8ff00; /* Marco verde */
+            border-radius: 15px;
+            width: 80%;
+            max-width: 500px;
+            text-align: left;
+            position: relative;
+            color: white;
+        }
+
+        .modal-header {
+            text-align: center;
+        }
+
+        .modal-header img {
+            width: 200px;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        .modal-body {
+            margin-top: 10px;
+        }
+
+        .modal-body p {
+            margin: 5px 0;
+        }
+
+        .modal-body a {
+            color: #a8ff00;
+            text-decoration: none;
+        }
+
+        .modal-body a:hover {
+            text-decoration: underline;
+        }
+
+        .copy-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #a8ff00;
+            color: black;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            animation: pulse 1.5s infinite; /* Efecto de titilación */
+        }
+
+        .copy-btn:hover {
+            background-color: #8fd600;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .copy-btn::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 10%, transparent 10.01%);
+            background-repeat: no-repeat;
+            background-position: 50%;
+            transform: scale(10, 10);
+            opacity: 0;
+            transition: transform 0.5s, opacity 1s;
+        }
+
+        .copy-btn:active::after {
+            transform: scale(0, 0);
+            opacity: 0.3;
+            transition: 0s;
+        }
+
+        .copy-message-modal {
+            display: none;
+            position: fixed;
+            z-index: 2;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .copy-message-content {
+            background-color: black;
+            margin: 20% auto;
+            padding: 20px;
+            border: 5px solid #a8ff00; /* Marco verde */
+            border-radius: 15px;
+            width: 80%;
+            max-width: 300px;
+            text-align: center;
+            position: relative;
+            color: white;
+        }
+
+        .close-copy-message {
+            position: absolute;
+            right: 10px;
+            top: 5px;
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-copy-message:hover {
+            color: white;
+        }
+
+        .close {
+            position: absolute;
+            right: 10px;
+            top: 5px;
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Botón de cierre -->
+        <button class="close-btn" onclick="window.location.href='https://www.vendeygana.net/user/'">X</button>
+        
+        <!-- Formulario -->
+        <iframe src="https://fluidforms.co/embed/form?id=679d508726888af15ed53a43" class="form-iframe"></iframe>
+        
+        <!-- Video -->
+        <div class="video-frame">
+            <iframe src="https://www.youtube.com/embed/mpdY5xEeWUU?start=3" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        
+        <!-- Botón de descarga -->
+        <button class="download-btn" onclick="openModal()">
+            <img src="https://dhgf5mcbrms62.cloudfront.net/110979006/header-fcHJMd/IVsTzWZ-200x200.webp" alt="Logo PanaxStreaming"> ENLACE DE DESCARGA DE PANA XTREAMING
+        </button>
+    </div>
+
+    <!-- Ventana emergente principal -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div class="modal-header">
+                <img src="https://dhgf5mcbrms62.cloudfront.net/110979006/header-fcHJMd/IVsTzWZ-200x200.webp" alt="Logo PanaxStreaming">
+            </div>
+            <div class="modal-body">
+                <p>APP OFICIAL DEL SERVICIO 2025</p>
+                <p>🇻🇪🇺🇾🇲🇽🇪🇨🇨🇴🇦🇷🇦🇫🇧🇷</p>
+                <p>Valida para ser instaladas en dispositivos android👇👇</p>
+                <p>FIRE TV, TV BOX, SMARTV, TABLETS, MOBILES, PC, ON STICK📱🖥️💻</p>
+                <p>Enlace de Descarga para mobiles👇👇👇</p>
+                <a href="https://aftv.news/992732" target="_blank">https://aftv.news/992732</a>
+                <p>Código Downloader: 992732</p>
+                <p>Gracias por ser parte de PANA XTREAMING</p>
+            </div>
+            <button class="copy-btn" onclick="copyInfo()">Copiar</button>
+        </div>
+    </div>
+
+    <!-- Ventana emergente para el mensaje de copiado -->
+    <div id="copyMessageModal" class="copy-message-modal">
+        <div class="copy-message-content">
+            <span class="close-copy-message" onclick="closeCopyMessageModal()">&times;</span>
+            <p>Se copió la información, puede pegarla en su WhatsApp u otro lugar para tenerla disponible.</p>
+        </div>
+    </div>
+
+    <script>
+        function openModal() {
+            document.getElementById('myModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('myModal').style.display = 'none';
+        }
+
+        function openCopyMessageModal() {
+            document.getElementById('copyMessageModal').style.display = 'block';
+        }
+
+        function closeCopyMessageModal() {
+            document.getElementById('copyMessageModal').style.display = 'none';
+        }
+
+        function copyInfo() {
+            const info = `APP OFICIAL DEL SERVICIO 2025
+🇻🇪🇺🇾🇲🇽🇪🇨🇨🇴🇦🇷🇦🇫🇧🇷
+Valida para ser instaladas en dispositivos android👇👇
+FIRE TV, TV BOX, SMARTV, TABLETS, MOBILES, PC, ON STICK📱🖥️💻
+Enlace de Descarga para mobiles👇👇👇
+https://aftv.news/992732
+Código Downloader: 992732
+Gracias por ser parte de PANA XTREAMING`;
+
+            navigator.clipboard.writeText(info).then(() => {
+                openCopyMessageModal();
+            });
+        }
+
+        window.onclick = function(event) {
+            var modal = document.getElementById('myModal');
+            var copyMessageModal = document.getElementById('copyMessageModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+            if (event.target == copyMessageModal) {
+                copyMessageModal.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
