@@ -10,13 +10,13 @@
             padding: 0;
             height: 100%;
             font-family: Arial, sans-serif;
+            background-color: black; /* Fondo negro para toda la página */
         }
 
         .container {
             position: relative;
-            width: 90%; /* Ancho reducido para dejar espacio al marco */
-            height: 90vh; /* Altura reducida para dejar espacio al marco */
-            margin: 5% auto; /* Centrar el contenedor */
+            width: 100%; /* Ancho completo */
+            height: 100vh; /* Altura completa */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -26,6 +26,7 @@
             border-radius: 15px; /* Bordes redondeados */
             padding: 20px; /* Espacio interno */
             box-shadow: 0 0 20px rgba(168, 255, 0, 0.5); /* Sombra verde */
+            box-sizing: border-box; /* Incluir el padding y border en el tamaño total */
         }
 
         .close-btn {
